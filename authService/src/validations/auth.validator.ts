@@ -1,11 +1,18 @@
-import {email, z} from "zod";
+import { z } from "zod";
 
-const registerSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8)
+
+export const registerSchema = z.object({
+  body: z.object({
+    email: z.string().email("Invalid email"),
+    password: z.string().min(4, "Password must be at least 4 chars"),
+    role: z.enum(["USER", "ADMIN"]).optional()
+  })
 })
 
 
-export {
-  registerSchema
-}
+export const loginSchema = z.object({
+  body: z.object({
+    email: z.string().email("Invalid"),
+    password: z.string().min(4, "Password must be at least 4 chars")
+  })
+})
