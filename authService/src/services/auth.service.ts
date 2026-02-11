@@ -1,7 +1,13 @@
 import { PrismaClient } from "../generated/prisma/client";
 import {hashPassword, comparePassword} from "../utils/hash"
 import { BadRequest, Unauthorized } from "../utils/httpErrors";
-import {generateAccessToken, generateRefreshToken} from '../utils/token'
+import {
+  generateAccessToken, 
+  generateRefreshToken,
+  hashRefreshToken,
+  getRefreshTokenExpiry
+} from '../utils/token'
+
 
 const prisma = new PrismaClient();
 
@@ -45,11 +51,33 @@ export const login = async (email: string, password: string) => {
     throw Unauthorized("Invalid Email or Password");
   }
 
-  const {
-    passwordHash: _,
-    ...safeUser
-  } = userInfo;
+  // generate access Token
+  const accessToken = generateAccessToken({
+    sub: userInfo.id,
+    role: userInfo.role
+  })
 
-  return safeUser;
+  // generate Refresh token
+  const refreshToken = generateRefreshToken();
+  const refreshTokenHash = hashRefreshToken(refreshToken);
+
+  // store refresh token
+  await prisma.refreshToken.create({
+    data: {
+      tokenHash: refreshTokenHash,
+      userId: userInfo.id,
+      expiresAt: getRefreshTokenExpiry()
+    }
+  })
+
+  return {
+    accessToken,
+    refreshToken,
+    user: {
+      id: userInfo.id,
+      email: userInfo.email,
+      role: userInfo.role,
+    },
+  };
 }
 

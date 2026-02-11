@@ -8,7 +8,7 @@ export const generateAccessToken = (payload: {
   sub: string;
   role: string;
 }) => {
-  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET!, {
+  return jwt.sign(payload, process.env.JWT_ACCESS_SECRET!, {
     expiresIn: ACCESS_TOKEN_TTL,
   });
 };

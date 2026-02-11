@@ -18,7 +18,11 @@ export const register = asyncHandler(
 
 export const login = asyncHandler(
   async (req: Request, res:Response) => {
-    const user = await authService.login(req.body.email, req.body.password);
+    const user = await authService.login(
+      req.body.email, 
+      req.body.password
+    );
+    
     res.status(201).json({
       success: true,
       data: user
