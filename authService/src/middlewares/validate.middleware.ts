@@ -20,9 +20,9 @@ export const validate =
     }
 
     // overwrite with parsed & typed data
-    req.body = result.data.body;
-    req.query = result.data.query as ParsedQs;
-    req.params = result.data.params as ParamsDictionary;
+    Object.assign(req.body, result.data.body);
+    Object.assign(req.query, result.data.query);
+    Object.assign(req.params, result.data.params);
 
     next();
   };
