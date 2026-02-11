@@ -15,15 +15,31 @@ datasource db {
 }
 
 model UserAuth {
-  id String @id @default(uuid())
-  email String @unique
-  passwordHash String 
-  role Role @default(USER)
-  refreshToken String?
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(USER)
+  isActive     Boolean  @default(true)
+
+  refreshTokens RefreshToken[]
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+}
+
+model RefreshToken {
+  id         String   @id @default(uuid())
+  tokenHash String
+  userId     String
+  user       UserAuth @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  expiresAt DateTime
+  revokedAt DateTime?
+
   createdAt DateTime @default(now())
 }
 
-enum Role{
+enum Role {
   USER
   ADMIN
 }
