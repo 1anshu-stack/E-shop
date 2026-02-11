@@ -4,8 +4,7 @@ import { z } from "zod";
 export const registerSchema = z.object({
   body: z.object({
     email: z.string().email("Invalid email"),
-    password: z.string().min(4, "Password must be at least 4 chars"),
-    role: z.enum(["USER", "ADMIN"]).optional()
+    password: z.string().min(4, "Password must be at least 4 chars")
   })
 })
 

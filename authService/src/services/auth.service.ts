@@ -19,7 +19,11 @@ export const register = async (email: string, password: string) => {
   const hashed = await hashPassword(password);
 
   return prisma.userAuth.create({
-    data: {email, passwordHash: hashed}
+    data: {
+      email, 
+      passwordHash: hashed,
+      role: "USER"
+    }
   })
 }
 
