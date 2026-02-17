@@ -85,6 +85,9 @@ export const logout = asyncHandler(
     const { refreshToken } = req.body;
 
     await authService.logout(refreshToken);
+
+    // Clear cookie
+    res.clearCookie("refreshToken")
   
     res.status(200).json({
       success: true,
