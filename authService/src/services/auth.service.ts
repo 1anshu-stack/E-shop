@@ -159,6 +159,34 @@ export const refreshAccessToken = async(refreshToken: string) => {
 
 
 
+/**
+ * 
+ * @param refreshToken 
+ * @returns 
+ */
 export const logout = async(refreshToken: string) => {
+  if(!refreshAccessToken){
+    throw Unauthorized("Refresh token missing");
+  }
 
+  // hash a refreshToken
+  const hashToken = hashRefreshToken(refreshToken);
+
+  // find the refresh token by hash
+  const tokenToDelete = await prisma.refreshToken.findFirst({
+    where: { tokenHash: hashToken },
+  });
+
+  if (!tokenToDelete) {
+    throw Unauthorized("Refresh token not found");
+  }
+
+  // delete the refresh token by id
+  await prisma.refreshToken.delete({
+    where: { id: tokenToDelete.id },
+  });
+
+
+  return { message: "Logged out successfully" };
 }
+
