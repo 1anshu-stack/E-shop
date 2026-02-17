@@ -1,9 +1,12 @@
 import {Request, Response} from "express";
 import * as authService from "../services/auth.service"
 import { asyncHandler } from "../utils/asyncHandler";
+import { BadRequest } from "../utils/httpErrors";
 
 
-
+/**
+ * Register controller
+ */
 export const register = asyncHandler(
   async (req: Request, res: Response) => {
     const user = await authService.register(req.body.email, req.body.password);
@@ -15,7 +18,9 @@ export const register = asyncHandler(
 );
 
 
-
+/**
+ * Login controller
+ */
 export const login = asyncHandler(
   async (req: Request, res:Response) => {
     const user = await authService.login(
@@ -27,5 +32,29 @@ export const login = asyncHandler(
       success: true,
       data: user
     });
+  }
+)
+
+
+/**
+ * Refresh controller
+ */
+export const refreshToken = asyncHandler(
+  async(req: Request, res: Response) => {
+    const {refreshToken} = req.body;
+
+    const result = await authService.refreshAccessToken(refreshToken);
+
+    res.status(200).json(result)
+  }
+) 
+
+
+/**
+ * logout controller
+ */
+export const logout = asyncHandler(
+  async(req: Request, res: Response) => {
+    
   }
 )

@@ -10,7 +10,12 @@ import {
 
 
 
-
+/**
+ * register service
+ * @param email 
+ * @param password 
+ * @returns 
+ */
 export const register = async (email: string, password: string) => {
   const existingUser = await prisma.userAuth.findUnique({
     where: {email}
@@ -32,6 +37,12 @@ export const register = async (email: string, password: string) => {
 }
 
 
+/**
+ * Login service
+ * @param email 
+ * @param password 
+ * @returns 
+ */
 export const login = async (email: string, password: string) => {
   const userInfo = await prisma.userAuth.findUnique({
     where: {email}
@@ -79,3 +90,75 @@ export const login = async (email: string, password: string) => {
   };
 }
 
+
+/**
+ * 
+ * @param refreshToken 
+ * @returns 
+ */
+export const refreshAccessToken = async(refreshToken: string) => {
+  if (!refreshToken) {
+    throw Unauthorized("Refresh token missing");
+  }
+
+  // hash incoming token 
+  const tokenHash = hashRefreshToken(refreshToken);
+  // console.log("tokenHash", tokenHash);
+
+  // find token in db
+  const storedToken = await prisma.refreshToken.findFirst({
+    where: { tokenHash: tokenHash },
+    include: { user: true },
+  });
+
+  // console.log("storedToken", storedToken);
+
+  if (!storedToken) {
+    throw Unauthorized("Invalid refresh token");
+  }
+
+  if(storedToken.expiresAt < new Date()){
+    // delete refresh token
+    await prisma.refreshToken.delete({
+      where: {id: storedToken.id}
+    })
+
+    throw Unauthorized("Refresh token expired");
+  }
+
+  const user = storedToken.user;
+
+  // new access token generate
+  const newAccessToken = generateAccessToken({
+    sub: user.id,
+    role: user.role,
+  });
+
+  // ROTATE REFRESH TOKEN
+  await prisma.refreshToken.delete({
+    where: { id: storedToken.id },
+  });
+
+  // generate refresh token
+  const newRefreshToken = generateRefreshToken();
+  const newHashRefreshToken = hashRefreshToken(newRefreshToken);
+
+  await prisma.refreshToken.create({
+    data: {
+      tokenHash: newHashRefreshToken,
+      userId: user.id,
+      expiresAt: getRefreshTokenExpiry()
+    }
+  })
+
+  return {
+    accessToken: newAccessToken,
+    refreshToken: newRefreshToken,
+  };
+}
+
+
+
+export const logout = async(refreshToken: string) => {
+
+}

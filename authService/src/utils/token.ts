@@ -4,6 +4,11 @@ import crypto from "crypto";
 const ACCESS_TOKEN_TTL = "15m";        // short-lived
 const REFRESH_TOKEN_TTL_DAYS = 7;       // long-lived
 
+/**
+ * Access token
+ * @param payload 
+ * @returns 
+ */
 export const generateAccessToken = (payload: {
   sub: string;
   role: string;
@@ -13,6 +18,11 @@ export const generateAccessToken = (payload: {
   });
 };
 
+
+/**
+ * Refresh Token
+ * @returns 
+ */
 export const generateRefreshToken = () => {
   return crypto.randomBytes(64).toString("hex");
 };
