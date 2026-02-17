@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import * as authService from "../services/auth.service"
 import { asyncHandler } from "../utils/asyncHandler";
-import { BadRequest } from "../utils/httpErrors";
+
 
 
 /**
@@ -53,11 +53,26 @@ export const login = asyncHandler(
  */
 export const refreshToken = asyncHandler(
   async(req: Request, res: Response) => {
-    const {refreshToken} = req.body;
+    const refreshToken = req.cookies.refreshToken;
 
     const result = await authService.refreshAccessToken(refreshToken);
 
-    res.status(200).json(result)
+    const {
+      accessToken,
+      refreshToken: newRefreshToken
+    } = result;
+
+    res.cookie("refreshToken", newRefreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: {accessToken}
+    })
   }
 ) 
 
