@@ -18,4 +18,9 @@ router.post(
   authController.login
 );
 
+
+router.post(
+  "/refresh",
+)
+
 export default router;

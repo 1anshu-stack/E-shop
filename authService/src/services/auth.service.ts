@@ -1,4 +1,4 @@
-import { PrismaClient } from "../generated/prisma/client";
+import {prisma} from "../lib/prisma"
 import {hashPassword, comparePassword} from "../utils/hash"
 import { BadRequest, Unauthorized } from "../utils/httpErrors";
 import {
@@ -8,8 +8,6 @@ import {
   getRefreshTokenExpiry
 } from '../utils/token'
 
-
-const prisma = new PrismaClient();
 
 
 
