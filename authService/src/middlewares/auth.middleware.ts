@@ -1,6 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import "../types/express.d.ts";
-import jwt from "jsonwebtoken";
 import { Unauthorized } from "../utils/httpErrors";
 import { verifyToken } from "../utils/token";
 
@@ -16,17 +14,24 @@ export const authMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
+
+  // console.log("request", req.headers.authorization);
   const authHeader = req.headers.authorization;
 
-  // Check if header exists
-  if(!authHeader || !authHeader.startsWith("Bearer ")){
-    throw Unauthorized("Access token missing")
+  if(!authHeader) {
+    throw Unauthorized("Access token missing");
   }
+  
+  const parts = authHeader.split(" ");
+  // console.log(parts)
 
-  // Extract token
-  const jwtToken = authHeader.split(" ")[1];
+  if (parts.length !== 2 || parts[0].toLowerCase() !== "bearer") {
+    throw Unauthorized("Invalid authorization header");
+  }
+  
+  const jwtToken = parts[1];
 
-
+  
   try {
     const tokenValid = verifyToken(jwtToken) as jwtPayload;
 

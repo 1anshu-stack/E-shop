@@ -4,6 +4,7 @@ import { asyncHandler } from "../utils/asyncHandler";
 
 
 
+
 /**
  * Register controller
  */
@@ -82,7 +83,7 @@ export const refreshToken = asyncHandler(
  */
 export const logout = asyncHandler(
   async(req: Request, res: Response) => {
-    const { refreshToken } = req.body;
+    const { refreshToken } = req.cookies.refreshToken;
 
     await authService.logout(refreshToken);
 
@@ -93,5 +94,28 @@ export const logout = asyncHandler(
       success: true,
       message: "Logged out successfully",
     });
+  }
+)
+
+
+
+/**
+ * TEST CONTROLLERS
+ */
+export const me = asyncHandler(
+  async(req: Request, res: Response) => {
+    res.status(200).json({
+      success: true,
+      message: "api secure"
+    })
+  }
+) 
+
+export const role = asyncHandler(
+  async(req: Request, res: Response) => {
+    res.status(200).json({
+      success: true,
+      message: "role based"
+    })
   }
 )

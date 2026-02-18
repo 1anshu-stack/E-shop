@@ -9,8 +9,10 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
+  "include": ["src", "types"],  
   "exclude": [
     "node_modules",
     "prisma.config.ts",
