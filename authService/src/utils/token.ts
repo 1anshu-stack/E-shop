@@ -20,6 +20,16 @@ export const generateAccessToken = (payload: {
 
 
 /**
+ * Verify Token
+ * @param token 
+ * @returns 
+ */
+export const verifyToken = (token: string) => {
+  return jwt.verify(token, process.env.JWT_ACCESS_SECRET!);
+} 
+
+
+/**
  * Refresh Token
  * @returns 
  */
