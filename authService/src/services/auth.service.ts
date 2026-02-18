@@ -165,7 +165,7 @@ export const refreshAccessToken = async(refreshToken: string) => {
  * @returns 
  */
 export const logout = async(refreshToken: string) => {
-  if(!refreshAccessToken){
+  if(!refreshToken){
     throw Unauthorized("Refresh token missing");
   }
 
