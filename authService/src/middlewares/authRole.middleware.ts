@@ -12,8 +12,9 @@ interface AuthenticatedRequest extends Request {
 export const roleBasedAuth = (
   ...roles: string[]
 ) => {
-  return(req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-    if(!roles.includes(req.user.role)){
+  return(req: Request, res: Response, next: NextFunction) => {
+    const authRequest = req as AuthenticatedRequest;
+    if(!authRequest.user || !roles.includes(authRequest.user.role)){
       throw Forbidden("Access denied")
     }
 
