@@ -37,7 +37,6 @@ router.get('/me', authMiddleware, authController.me);
  */
 router.get(
   '/role', 
-  authMiddleware, 
   roleBasedAuth('USER'), 
   authController.role
 );

@@ -14,7 +14,12 @@ export const roleBasedAuth = (
 ) => {
   return(req: Request, res: Response, next: NextFunction) => {
     const authRequest = req as AuthenticatedRequest;
-    if(!authRequest.user || !roles.includes(authRequest.user.role)){
+
+    if (!authRequest.user) {
+      throw Forbidden("Developer Error: roleBasedAuth used without authMiddleware");
+    }
+
+    if(!roles.includes(authRequest.user.role)){
       throw Forbidden("Access denied")
     }
 
