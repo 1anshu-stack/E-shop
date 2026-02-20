@@ -98,6 +98,27 @@ export const logout = asyncHandler(
 )
 
 
+/**
+ * To get the user Info when userService call for it.
+ */
+interface UserParams {
+  id: string;
+}
+
+export const getSingleUser = asyncHandler(
+  async(req: Request<UserParams>, res: Response) => {
+    const userId = req.params.id;
+
+    const userInfo = await authService.getSingleUser(userId);
+
+    res.status(200).json({
+      success: true,
+      data: userInfo
+    })
+  }
+)
+
+
 
 /**
  * TEST CONTROLLERS

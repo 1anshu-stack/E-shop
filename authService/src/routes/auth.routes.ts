@@ -16,6 +16,7 @@ router.post(
   authController.register
 );
 
+
 /**
  * login router
  */
@@ -25,6 +26,7 @@ router.post(
   authController.login
 );
 
+
 /**
  * refresh router
  */
@@ -32,6 +34,7 @@ router.post(
   '/refresh', 
   authController.refreshToken
 );
+
 
 /**
  * logout router
@@ -42,6 +45,14 @@ router.post(
   authController.logout
 );
 
+
+router.get(
+  '/internal/user/:id',
+  authMiddleware,
+  authController.getSingleUser
+)
+
+
 /**
  * TEST ROUTES FOR Bearer Token
  */
@@ -51,6 +62,7 @@ router.get(
   authController.me
 );
 
+
 /**
  * TEST ROUTES FOR ROLE BASED AUTH
  */
@@ -59,5 +71,6 @@ router.get(
   roleBasedAuth('USER'), 
   authController.role
 );
+
 
 export default router;
