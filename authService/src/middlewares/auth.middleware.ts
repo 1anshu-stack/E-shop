@@ -34,7 +34,6 @@ export const authMiddleware = (
   
   try {
     const tokenValid = verifyToken(jwtToken) as jwtPayload;
-
     req.user = {
       id: tokenValid.sub,
       role: tokenValid.role

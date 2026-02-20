@@ -190,3 +190,23 @@ export const logout = async(refreshToken: string) => {
   return { message: "Logged out successfully" };
 }
 
+
+/**
+ * 
+ * @param id 
+ */
+export const getSingleUser = async(id: string) => {
+  
+  const userDetail = await prisma.userAuth.findUnique({
+    where: {
+      id
+    },
+    select: {
+      email: true,
+      role: true,
+      isActive: true
+    }
+  })
+
+  return userDetail;
+}
