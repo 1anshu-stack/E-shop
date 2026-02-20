@@ -13,6 +13,3 @@ CREATE TABLE "UserProfile" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "UserProfile_userId_key" ON "UserProfile"("userId");
-
--- CreateIndex
-CREATE INDEX "UserProfile_userId_idx" ON "UserProfile"("userId");

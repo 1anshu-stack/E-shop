@@ -23,6 +23,4 @@ model UserProfile {
   phone     String?
   avatar    String?
   createdAt DateTime @default(now())
-
-  @@index([userId])
 }

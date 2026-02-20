@@ -1,4 +1,3 @@
-import { dot } from "node:test/reporters";
 import app from "./app";
 import dotenv from "dotenv";
 

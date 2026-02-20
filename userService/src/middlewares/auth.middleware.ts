@@ -3,17 +3,13 @@ import jwt from "jsonwebtoken";
 import { Unauthorized } from "../utils/httpError";
 
 
-export interface AuthRequest extends Request {
-  user?: any
-}
-
 interface jwtPayload {
   sub: string,
   role: string
 }
 
 export const verifyToken = (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
@@ -24,7 +20,14 @@ export const verifyToken = (
     throw Unauthorized("Token is not present");
   }
 
-  const token = authHeader.split(" ")[1];
+  const parts = authHeader.split(" ");
+  // console.log(parts)
+
+  if(parts.length!=2 || parts[0].toLowerCase()!== "bearer"){
+    throw Unauthorized("Invalid authorization header");
+  }
+
+  const token = parts[1];
 
   if (!process.env.JWT_ACCESS_SECRET) {
     throw Unauthorized("JWT secret is not defined");
@@ -32,6 +35,7 @@ export const verifyToken = (
 
   try {
     const tokenInfo = jwt.verify(token, process.env.JWT_ACCESS_SECRET) as jwtPayload;
+    console.log("insideAuthMiddleware",tokenInfo);
     req.user = tokenInfo;
     next();
   } catch (error) {
