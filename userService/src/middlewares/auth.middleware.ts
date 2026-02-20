@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { Unauthorized } from "../utils/httpError";
 
 
+
 interface jwtPayload {
   sub: string,
   role: string
@@ -16,7 +17,7 @@ export const verifyToken = (
 
   const authHeader = req.headers.authorization;
 
-  if(!authHeader){
+  if(!authHeader || typeof authHeader !== "string"){
     throw Unauthorized("Token is not present");
   }
 

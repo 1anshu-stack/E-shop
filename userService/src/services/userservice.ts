@@ -1,4 +1,5 @@
-import {prisma} from "../config/prisma"
+import { prisma } from '../config/prisma';
+import axios from 'axios';
 
 interface ProfileValues {
   firstName: string;
@@ -9,9 +10,9 @@ interface ProfileValues {
 
 /**
  * save profile info into database
- * @param id 
- * @param values 
- * @returns 
+ * @param id
+ * @param values
+ * @returns
  */
 export const profileSave = (id: string, values: ProfileValues) => {
   // console.log("inside service layer", id, values);
@@ -19,22 +20,39 @@ export const profileSave = (id: string, values: ProfileValues) => {
   return prisma.userProfile.create({
     data: {
       userId: id,
-      ...values
-    }
-  })
-}
-
+      ...values,
+    },
+  });
+};
 
 /**
  * get user info from the database
- * @param userId 
+ * @param userId
  */
-export const profileGet = async (userId: string) => {
+export const profileGet = async (userId: string, token: string) => {
+
   const userInfo = await prisma.userProfile.findUnique({
     where: {
-      userId
-    }
-  })
+      userId,
+    },
+  });
 
-  return userInfo;
-}
+  if(!userInfo) return null;
+
+  const authInto = await axios.get(
+    `http://localhost:4001/auth/internal/user/${userId}`,
+    {
+      headers: {
+        "authorization": `Bearer ${token}`
+      }
+    }
+  )
+
+  if(!authInto) return null;
+
+  Object.assign(userInfo, authInto.data);
+
+  return {
+    userInfo
+  };
+};
