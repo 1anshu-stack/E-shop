@@ -8,6 +8,9 @@ import { verifyToken } from "../middlewares/auth.middleware";
 const router = Router();
 
 
+/**
+ * post a user profile details
+ */
 router.post(
   "/profile", 
   validate(createProfileSchema),
@@ -15,5 +18,14 @@ router.post(
   authController.setProfile
 )
 
+
+/**
+ * get a user profile details
+ */
+router.get(
+  "/profile",
+  verifyToken,
+  authController.getProfile
+)
 
 export default router;
