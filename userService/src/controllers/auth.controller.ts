@@ -5,6 +5,9 @@ import { Unauthorized } from "../utils/httpError";
 
 
 
+/**
+ * setProfile controller
+ */
 export const setProfile = asyncHandler(
   async (req: Request, res: Response) => {
     // console.log("request", req.user);
@@ -21,6 +24,25 @@ export const setProfile = asyncHandler(
     res.status(200).json({
       success: true,
       data: profile
+    })
+  }
+)
+
+
+/**
+ * getProfile controller
+ */
+export const getProfile = asyncHandler(
+  async (req: Request, res: Response) => {
+    if (!req.user || !req.user.sub) {
+      throw Unauthorized("Unauthorized");
+    }
+
+    const result = await userService.profileGet(req.user.sub)
+
+    res.status(200).json({
+      success: true,
+      data: result
     })
   }
 )
