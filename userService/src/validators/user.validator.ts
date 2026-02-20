@@ -7,3 +7,4 @@ export const createProfileSchema = z.object({
   avatra: z.string().url().optional()
 })
 
+
