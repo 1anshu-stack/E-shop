@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { Unauthorized } from "../utils/httpErrors";
 import { verifyToken } from "../utils/token";
+import { string } from "zod";
 
 
 interface jwtPayload {
   sub: string,
   role: string
 }
-
 
 export const authMiddleware = (
   req: Request,
@@ -16,9 +16,9 @@ export const authMiddleware = (
 ) => {
 
   // console.log("request", req.headers.authorization);
-  const authHeader = req.headers.authorization;
+  const authHeader = req.headers.Authorization;
 
-  if(!authHeader) {
+  if (!authHeader || typeof authHeader !== "string") {
     throw Unauthorized("Access token missing");
   }
   
