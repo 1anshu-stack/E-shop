@@ -36,7 +36,7 @@ export const validateToken = (
 
   try {
     const tokenInfo = jwt.verify(token, process.env.JWT_ACCESS_SECRET) as jwtPayload;
-    console.log("insideAuthMiddleware",tokenInfo);
+    // console.log("insideAuthMiddleware",tokenInfo);
     req.user = tokenInfo;
     next();
   } catch (error) {
