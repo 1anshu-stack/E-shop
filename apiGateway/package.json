@@ -1,0 +1,32 @@
+{
+  "name": "apigateway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "http-proxy-middleware": "^3.0.5",
+    "jsonwebtoken": "^9.0.3",
+    "morgan": "^1.10.1",
+    "rate-limiter-flexible": "^9.1.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.6",
+    "@types/helmet": "^0.0.48",
+    "@types/http-proxy-middleware": "^0.19.3",
+    "@types/morgan": "^1.9.10",
+    "typescript": "^5.9.3"
+  }
+}
