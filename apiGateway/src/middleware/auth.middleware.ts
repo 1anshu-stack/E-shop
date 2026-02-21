@@ -1,36 +1,45 @@
 import { Request, Response, NextFunction } from "express";
-import { Unauthorized } from "../utils/httpErrors";
 import jwt from "jsonwebtoken";
+import { Unauthorized } from "../utils/httpErrors";
 
 
-interface JWTtoken {
+
+interface jwtPayload {
   sub: string,
   role: string
 }
-
 
 export const validateToken = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+
   const authHeader = req.headers.authorization;
-  if(!authHeader){
-    throw Unauthorized("No Token Provided");
+
+  if(!authHeader || typeof authHeader !== "string"){
+    throw Unauthorized("Token is not present");
   }
 
-  const part = authHeader.split(" ");
-  if(part.length !== 2 || part[0].toLowerCase() !== "bearer"){
+  const parts = authHeader.split(" ");
+  // console.log(parts)
+
+  if(parts.length!=2 || parts[0].toLowerCase()!== "bearer"){
     throw Unauthorized("Invalid authorization header");
   }
 
-  const token = part[1];
+  const token = parts[1];
+
+  if (!process.env.JWT_ACCESS_SECRET) {
+    throw Unauthorized("JWT secret is not defined");
+  }
 
   try {
-    const userInfo = jwt.verify(token, "process.env.JWT_ACCESS_SECRET") as JWTtoken;
-    req.user = userInfo;
+    const tokenInfo = jwt.verify(token, process.env.JWT_ACCESS_SECRET) as jwtPayload;
+    console.log("insideAuthMiddleware",tokenInfo);
+    req.user = tokenInfo;
     next();
   } catch (error) {
-    throw Unauthorized("Invalid token");
+    throw Unauthorized("Token is not valid");
   }
 }

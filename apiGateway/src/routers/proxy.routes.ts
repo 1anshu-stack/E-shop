@@ -15,9 +15,6 @@ router.use(
   createProxyMiddleware({
     target: "http://localhost:4001/auth",
     changeOrigin: true,
-    pathRewrite: {
-      "^/api/auth": "/auth"
-    }
   })
 )
 
@@ -29,7 +26,7 @@ router.use(
   "/user",
   validateToken,
   createProxyMiddleware({
-    target: "http://localhost:4002",
+    target: "http://localhost:4002/user",
     changeOrigin: true
   })
 )
