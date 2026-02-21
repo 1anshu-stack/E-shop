@@ -29,7 +29,7 @@ export const profileSave = (id: string, values: ProfileValues) => {
  * get user info from the database
  * @param userId
  */
-export const profileGet = async (userId: string, token: string) => {
+export const profileGet = async (userId: string) => {
 
   const userInfo = await prisma.userProfile.findUnique({
     where: {
@@ -41,11 +41,6 @@ export const profileGet = async (userId: string, token: string) => {
 
   const authInto = await axios.get(
     `http://localhost:4001/auth/internal/user/${userId}`,
-    {
-      headers: {
-        "authorization": `Bearer ${token}`
-      }
-    }
   )
 
   if(!authInto) return null;
