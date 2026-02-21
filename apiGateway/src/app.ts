@@ -13,7 +13,7 @@ app.use(rateLimit);
 app.use(helmet());
 app.use(morgan("combined"));
 
-app.use('/api', proxyRoutes);
+app.use('/api/v1', proxyRoutes);
 
 
 export default app;
