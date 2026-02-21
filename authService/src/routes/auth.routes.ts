@@ -46,9 +46,11 @@ router.post(
 );
 
 
+/**
+ * userService to get Detail from authService
+ */
 router.get(
   '/internal/user/:id',
-  authMiddleware,
   authController.getSingleUser
 )
 

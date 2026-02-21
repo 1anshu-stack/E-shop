@@ -6,6 +6,7 @@ import { ValidationError } from '../utils/validationError';
 export const validate = 
   (schema: ZodObject<any>) => 
   (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.body);
     const result = schema.safeParse(req.body);
 
      if (!result.success) {

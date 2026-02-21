@@ -12,9 +12,8 @@ const router = Router();
  * post a user profile details
  */
 router.post(
-  "/profile", 
+  "/profile",
   validate(createProfileSchema),
-  verifyToken,
   authController.setProfile
 )
 
@@ -24,7 +23,6 @@ router.post(
  */
 router.get(
   "/profile",
-  verifyToken,
   authController.getProfile
 )
 
