@@ -11,7 +11,6 @@ const app = express();
 app.use(cors());
 app.use(rateLimit);
 app.use(helmet());
-app.use(express.json());
 app.use(morgan("combined"));
 
 app.use('/api', proxyRoutes);

@@ -13,8 +13,11 @@ const router = Router();
 router.use(
   "/auth",
   createProxyMiddleware({
-    target: "http://localhost:4001",
-    changeOrigin: true
+    target: "http://localhost:4001/auth",
+    changeOrigin: true,
+    pathRewrite: {
+      "^/api/auth": "/auth"
+    }
   })
 )
 
