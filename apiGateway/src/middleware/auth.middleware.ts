@@ -27,7 +27,7 @@ export const validateToken = (
   const token = part[1];
 
   try {
-    const userInfo = jwt.verify(token, process.env.JWT_ACCESS_SECRET) as JWTtoken;
+    const userInfo = jwt.verify(token, "process.env.JWT_ACCESS_SECRET") as JWTtoken;
     req.user = userInfo;
     next();
   } catch (error) {
