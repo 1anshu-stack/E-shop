@@ -3,7 +3,7 @@ import { AppError } from "../utils/appError";
 
 
 
-export const globalError = (
+export const globalErrorHandler = (
   err: Error,
   req: Request,
   res: Response,
