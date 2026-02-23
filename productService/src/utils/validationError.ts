@@ -1,7 +1,7 @@
 import { AppError } from "./appError";
 
 export class ValidationError extends AppError {
-  private errors: any;
+  public errors: any;
 
   constructor(errors: any){
     super("Validation Failed", 422)
