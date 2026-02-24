@@ -21,6 +21,22 @@ export const getProductsQuerySchema = z.object({
       .refine((val) => val > 0 && val <= 50, {
         message: "Limit must be between 1 and 50"
       }),
-    cursor: z.string().uuid().optional()
+    cursor: z.string().uuid().optional(),
+    categoryId: z.string().uuid().optional(),
+
+    minPrice: z
+      .string()
+      .optional()
+      .transform(val => (val ? parseFloat(val) : undefined)),
+
+    maxPrice: z
+      .string()
+      .optional()
+      .transform(val => (val ? parseFloat(val) : undefined)),
+
+    inStock: z
+      .string()
+      .optional()
+      .transform(val => val === "true")
   }),
 })
