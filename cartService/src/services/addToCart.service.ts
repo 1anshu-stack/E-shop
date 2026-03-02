@@ -49,3 +49,27 @@ export const getFromCart = async (userId: string) => {
 }
 
 
+export const removeItem = async (userId: string, productId: string){
+  if(!userId){
+    throw Unauthorized("Unauthorized user");
+  }
+
+  const key = `cart:${userId}`;
+
+  await redis.hdel(key, productId);
+
+  return "Item Removed"
+}
+
+
+export const clearCart = async (userId: string) => {
+  if(!userId){
+    throw Unauthorized("Unauthorized user");
+  }
+
+  const key = `cart:${userId}`;
+
+  await redis.del(key);
+
+  return "Cart cleared";
+};
