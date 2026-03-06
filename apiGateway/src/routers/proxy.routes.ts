@@ -46,4 +46,29 @@ router.use(
 )
 
 
+/**
+ * Protected ProductService category routes
+ */
+router.use(
+  "/category",
+  validateToken,
+  createProxyMiddleware({
+    target: "http://localhost:4003/category",
+    changeOrigin: true,
+  })
+)
+
+
+/**
+ *Protected ProductService Product routes
+ */
+router.use(
+  "/products/v1",
+  validateToken,
+  createProxyMiddleware({
+    target: "http://localhost:4003/products/v1",
+    changeOrigin: true,
+  })
+)
+
 export default router;
