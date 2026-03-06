@@ -51,7 +51,6 @@ router.use(
  */
 router.use(
   "/category",
-  validateToken,
   createProxyMiddleware({
     target: "http://localhost:4003/category",
     changeOrigin: true,
@@ -63,10 +62,10 @@ router.use(
  *Protected ProductService Product routes
  */
 router.use(
-  "/products/v1",
-  validateToken,
+  "/products",
+  // validateToken,
   createProxyMiddleware({
-    target: "http://localhost:4003/products/v1",
+    target: "http://localhost:4003/products",
     changeOrigin: true,
   })
 )
