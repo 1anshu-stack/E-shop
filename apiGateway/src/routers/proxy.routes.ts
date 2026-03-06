@@ -63,10 +63,10 @@ router.use(
  *Protected ProductService Product routes
  */
 router.use(
-  "/products/v1",
+  "/products",
   validateToken,
   createProxyMiddleware({
-    target: "http://localhost:4003/products/v1",
+    target: "http://localhost:4003/products",
     changeOrigin: true,
   })
 )
