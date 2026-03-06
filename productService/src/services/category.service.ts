@@ -9,5 +9,5 @@ export const createCategoryService = async (categoryName: CategoryCreateInput) =
     }
   })
 
-  return result
+  return result;
 }

@@ -17,7 +17,7 @@ export const createProduct = async(req: Request, res: Response) => {
 }
 
 
-/**
+/** 
  * getAllProduct controller
  * @param req 
  * @param res 

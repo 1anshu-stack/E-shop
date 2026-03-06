@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {categorySchema} from "../validation/category.validation"
-import * as categoryController from "../controllers/category.controller"
 import { validate } from "../middleware/validation.middleware";
+import * as categoryController from "../controllers/category.controller"
 
 
 const router = Router();
