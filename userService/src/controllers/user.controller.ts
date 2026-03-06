@@ -24,6 +24,8 @@ export const setProfile = asyncHandler(async (req: Request, res: Response) => {
   });
 });
 
+
+
 /**
  * getProfile controller
  */
@@ -31,6 +33,9 @@ export const getProfile = asyncHandler(async (req: Request, res: Response) => {
   // console.log("header", req.headers["x-user"]);
   const userHeader = JSON.parse(req.headers["x-user"] as string);
   const {sub, role} = userHeader;
+  if (!sub || !role) {
+    throw Unauthorized('Unauthorized');
+  }
 
   const result = await userService.profileGet(sub);
   
