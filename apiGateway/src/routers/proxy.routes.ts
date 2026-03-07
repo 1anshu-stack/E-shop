@@ -51,7 +51,6 @@ router.use(
  */
 router.use(
   "/category",
-  validateToken,
   createProxyMiddleware({
     target: "http://localhost:4003/category",
     changeOrigin: true,
