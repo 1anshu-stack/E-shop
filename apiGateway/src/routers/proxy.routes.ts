@@ -63,7 +63,7 @@ router.use(
  */
 router.use(
   "/products",
-  // validateToken,
+  validateToken,
   createProxyMiddleware({
     target: "http://localhost:4003/products",
     changeOrigin: true,
