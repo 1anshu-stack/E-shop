@@ -44,8 +44,8 @@ export const getFromCart = asyncHandler(
  */
 export const removeItemFromCart = asyncHandler(
   async(req: Request, res: Response) => {
-    const userId = req.headers["x-user-id"] as string;
-    const {productId} = req.body;
+    // const userId = req.headers["x-user-id"] as string;
+    const {productId, userId} = req.body;
 
     const result = await CartService.removeItem(userId, productId);
 

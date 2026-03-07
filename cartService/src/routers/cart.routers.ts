@@ -22,4 +22,12 @@ router.get(
 )
 
 
+/**
+ * remove Item from cart router
+ */
+router.delete(
+  '/deleteCartItem',
+  CartController.removeItemFromCart
+)
+
 export default router;
