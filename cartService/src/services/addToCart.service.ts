@@ -3,6 +3,13 @@ import { Unauthorized } from "../utils/httpErrorcode";
 
 const CART_TTL = 60 * 60 * 24; // 24 hours;
 
+/**
+ * Add to cartService
+ * @param productId 
+ * @param quantity 
+ * @param userId 
+ * @returns 
+ */
 export const addToCartService = async (productId: string, quantity: number, userId: string) => {
   if(!userId){
     throw Unauthorized("Unauthorized user");
@@ -34,6 +41,11 @@ export const addToCartService = async (productId: string, quantity: number, user
 }
 
 
+/**
+ * Get From cart
+ * @param userId 
+ * @returns 
+ */
 export const getFromCart = async (userId: string) => {
   if(!userId){
     throw Unauthorized("Unauthorized user");
@@ -49,6 +61,12 @@ export const getFromCart = async (userId: string) => {
 }
 
 
+/**
+ * Remove From cart
+ * @param userId 
+ * @param productId 
+ * @returns 
+ */
 export const removeItem = async (userId: string, productId: string){
   if(!userId){
     throw Unauthorized("Unauthorized user");
@@ -62,6 +80,11 @@ export const removeItem = async (userId: string, productId: string){
 }
 
 
+/**
+ * Clear Cart
+ * @param userId 
+ * @returns 
+ */
 export const clearCart = async (userId: string) => {
   if(!userId){
     throw Unauthorized("Unauthorized user");
