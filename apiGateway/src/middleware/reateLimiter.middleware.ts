@@ -4,8 +4,8 @@ import { NotFound, TooManyRequest } from "../utils/httpErrors";
 
 
 const rateLimiter = new RateLimiterMemory({
-  points: 1,
-  duration: 1
+  points: 10,
+  duration: 10
 })
 
 

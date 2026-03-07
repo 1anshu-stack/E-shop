@@ -21,6 +21,7 @@ export const addToCartService = async (productId: string, quantity: number, user
   }
 
   const key = `cart:${userId}`;
+  console.log("key", key);
 
   const existingItem = await redis.hget(key, productId);
 
@@ -58,6 +59,7 @@ export const getFromCart = async (userId: string) => {
   }
 
   const key = `cart:${userId}`;
+  console.log("key", key);
 
   const items = await redis.hgetall(key);
 
@@ -79,6 +81,7 @@ export const removeItem = async (userId: string, productId: string) => {
   }
 
   const key = `cart:${userId}`;
+  console.log("key", key);
 
   await redis.hdel(key, productId);
 
@@ -97,6 +100,7 @@ export const clearCart = async (userId: string) => {
   }
 
   const key = `cart:${userId}`;
+  console.log("key", key);
 
   await redis.del(key);
 
