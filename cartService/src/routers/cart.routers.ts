@@ -11,3 +11,15 @@ router.post(
   '/create',
   CartController.addToCart
 )
+
+
+/**
+ * get from cart router
+ */
+router.get(
+  '/getCartItems',
+  CartController.getFromCart
+)
+
+
+export default router;

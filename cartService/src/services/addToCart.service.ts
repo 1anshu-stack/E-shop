@@ -61,9 +61,9 @@ export const getFromCart = async (userId: string) => {
 
   const items = await redis.hgetall(key);
 
-  const paredItem = Object.values(items).map(item => JSON.parse(item))  
+  const parseItem = Object.values(items).map(item => JSON.parse(item))  
 
-  return paredItem;
+  return parseItem;
 }
 
 

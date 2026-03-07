@@ -26,8 +26,9 @@ export const addToCart = asyncHandler(
  */
 export const getFromCart = asyncHandler(
   async(req: Request, res: Response) => {
-    const userId = req.headers["x-user-id"] as string;
+    // const userId = req.headers["x-user-id"] as string;
 
+    const {userId} = req.body;
     const result = await CartService.getFromCart(userId);
 
     res.status(201).json({
