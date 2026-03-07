@@ -8,8 +8,8 @@ import * as CartService from "../services/addToCart.service";
  */
 export const addToCart = asyncHandler(
   async(req: Request, res: Response) => {
-    const userId = req.headers["x-user-id"] as string;
-    const {productId, quantity} = req.body;
+    // const userId = req.headers["x-user-id"] as string;
+    const {productId, quantity, userId} = req.body;
 
     const result = await CartService.addToCartService(productId, quantity, userId);
 
@@ -26,8 +26,9 @@ export const addToCart = asyncHandler(
  */
 export const getFromCart = asyncHandler(
   async(req: Request, res: Response) => {
-    const userId = req.headers["x-user-id"] as string;
+    // const userId = req.headers["x-user-id"] as string;
 
+    const {userId} = req.body;
     const result = await CartService.getFromCart(userId);
 
     res.status(201).json({
@@ -43,8 +44,8 @@ export const getFromCart = asyncHandler(
  */
 export const removeItemFromCart = asyncHandler(
   async(req: Request, res: Response) => {
-    const userId = req.headers["x-user-id"] as string;
-    const {productId} = req.body;
+    // const userId = req.headers["x-user-id"] as string;
+    const {productId, userId} = req.body;
 
     const result = await CartService.removeItem(userId, productId);
 
@@ -60,7 +61,8 @@ export const removeItemFromCart = asyncHandler(
  */
 export const clearCart = asyncHandler(
   async(req: Request, res: Response) => {
-    const userId = req.headers["x-user-id"] as string;
+    // const userId = req.headers["x-user-id"] as string;
+    const {userId} = req.body;
 
     const result = await CartService.clearCart(userId);
 
