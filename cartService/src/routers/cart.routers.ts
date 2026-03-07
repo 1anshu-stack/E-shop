@@ -30,4 +30,13 @@ router.delete(
   CartController.removeItemFromCart
 )
 
+
+/**
+ * Clear Cart
+ */
+router.delete(
+  '/clearCart',
+  CartController.clearCart
+)
+
 export default router;

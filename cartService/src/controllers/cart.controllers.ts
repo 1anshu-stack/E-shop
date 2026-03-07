@@ -61,7 +61,8 @@ export const removeItemFromCart = asyncHandler(
  */
 export const clearCart = asyncHandler(
   async(req: Request, res: Response) => {
-    const userId = req.headers["x-user-id"] as string;
+    // const userId = req.headers["x-user-id"] as string;
+    const {userId} = req.body;
 
     const result = await CartService.clearCart(userId);
 
