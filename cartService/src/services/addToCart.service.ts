@@ -3,6 +3,11 @@ import { Unauthorized } from "../utils/httpErrorcode";
 
 const CART_TTL = 60 * 60 * 24; // 24 hours;
 
+interface CartItem {
+  productId: string,
+  quantity: number
+}
+
 /**
  * Add to cartService
  * @param productId 
@@ -19,18 +24,19 @@ export const addToCartService = async (productId: string, quantity: number, user
 
   const existingItem = await redis.hget(key, productId);
 
-  let updatedQuanitiy = quantity;
+  let updatedQuanitiy: number = quantity;
+  
 
   if(existingItem){
-    const parsed = JSON.parse(existingItem);
-    updatedQuanitiy = parsed.quantity + quantity;
+    const parsed : CartItem = JSON.parse(existingItem);
+    updatedQuanitiy = Number(parsed.quantity) + Number(quantity);
   }
-
+  
   // todo
-  const cartItem = {
+  const cartItem : CartItem = {
     productId, 
-    title: product.title,
-    price: product.price,
+    // title: product.title,
+    // price: product.price,
     quantity: updatedQuanitiy
   }
 
@@ -67,7 +73,7 @@ export const getFromCart = async (userId: string) => {
  * @param productId 
  * @returns 
  */
-export const removeItem = async (userId: string, productId: string){
+export const removeItem = async (userId: string, productId: string) => {
   if(!userId){
     throw Unauthorized("Unauthorized user");
   }

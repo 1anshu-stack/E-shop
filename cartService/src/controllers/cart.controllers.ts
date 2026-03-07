@@ -8,8 +8,8 @@ import * as CartService from "../services/addToCart.service";
  */
 export const addToCart = asyncHandler(
   async(req: Request, res: Response) => {
-    const userId = req.headers["x-user-id"] as string;
-    const {productId, quantity} = req.body;
+    // const userId = req.headers["x-user-id"] as string;
+    const {productId, quantity, userId} = req.body;
 
     const result = await CartService.addToCartService(productId, quantity, userId);
 
