@@ -1,6 +1,6 @@
 import express  from "express";
 import cors from "cors";
-import * as orderController from "./controllers/order.controller";
+import orderRouter from "./routes/order.route";
 
 
 const app = express();
@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use(
   '/order',
-  orderController.createOrder
+  orderRouter
 )
 
 
