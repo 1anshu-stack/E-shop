@@ -16,6 +16,7 @@ export const validateToken = (
 ) => {
 
   const authHeader = req.headers.authorization;
+  // console.log("authHeader", authHeader);
 
   if(!authHeader || typeof authHeader !== "string"){
     throw Unauthorized("Token is not present");

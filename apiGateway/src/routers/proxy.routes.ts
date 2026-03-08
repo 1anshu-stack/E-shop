@@ -51,6 +51,7 @@ router.use(
  */
 router.use(
   "/category",
+  validateToken,
   createProxyMiddleware({
     target: "http://localhost:4003/category",
     changeOrigin: true,
@@ -67,6 +68,31 @@ router.use(
   createProxyMiddleware({
     target: "http://localhost:4003/products",
     changeOrigin: true,
+  })
+)
+
+
+/**
+ *Protected cartService routes
+ */
+router.use(
+  "/cart",
+  validateToken,
+  createProxyMiddleware({
+    target: "http://localhost:4004/cart",
+    changeOrigin: true,
+    on: {
+      proxyReq: (proxyReq: ClientRequest, req: Request, res: Response) => {
+        if (req.user) {
+          proxyReq.setHeader(
+            "x-user-id",
+            JSON.stringify({
+              userId: req.user.sub,
+            })
+          );
+        }
+      },
+    },
   })
 )
 
