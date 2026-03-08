@@ -53,3 +53,17 @@ export const getAllProduct = async(req: Request, res: Response) => {
     message: result
   });
 }
+
+
+
+export const getProductById = async(req: Request, res: Response) => {
+  const {productIds} = req.body;
+
+  const result = await productService.getProductById(productIds);
+
+  res.status(201).json({
+    success: true,
+    message: "Product By Id",
+    data: result
+  })
+}
