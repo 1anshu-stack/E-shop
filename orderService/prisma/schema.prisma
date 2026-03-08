@@ -15,4 +15,28 @@ datasource db {
 }
 
 
+model Order {
+ id          String   @id @default(uuid())
+ userId      String
+ totalAmount Float
+ status      OrderStatus @default(PENDING)
+ createdAt   DateTime @default(now())
 
+ items       OrderItem[]
+}
+
+model OrderItem {
+ id        String @id @default(uuid())
+ orderId   String
+ productId String
+ quantity  Int
+ price     Float
+
+ order     Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+enum OrderStatus {
+ PENDING
+ PAID
+ CANCELLED
+}
