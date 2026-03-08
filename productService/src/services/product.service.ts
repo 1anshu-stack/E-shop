@@ -67,3 +67,16 @@ export const getProductService = async (
     hasNextPage
   }
 }
+
+
+export const getProductById = async (productIds: string[]) => {
+  const data = prisma.product.findMany({
+    where: {
+      id : {
+        in: productIds
+      }
+    }
+  })
+
+  return data;
+}
