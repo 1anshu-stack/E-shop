@@ -70,7 +70,7 @@ export const getProductService = async (
 
 
 export const getProductById = async (productIds: string[]) => {
-  const data = prisma.product.findMany({
+  const data = await prisma.product.findMany({
     where: {
       id : {
         in: productIds
