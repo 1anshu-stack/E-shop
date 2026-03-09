@@ -29,7 +29,7 @@ router.get(
 /**
  * get Product with id
  */
-router.get(
+router.post(
   '/getProductById',
   productController.getProductById
 )
