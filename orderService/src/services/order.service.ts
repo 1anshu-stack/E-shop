@@ -63,7 +63,7 @@ export const createService = async (userId: string) => {
     // Create order items
     for (const product of products.data){
       const quantity = JSON.parse(cartItems[product.id]).quantity;
-      const orderItem = await tx.orderItem.create({
+      await tx.orderItem.create({
         data: {
           orderId: order.id,
           productId : product.id,
@@ -73,8 +73,16 @@ export const createService = async (userId: string) => {
       })
         
       // Decrease stock
-      
+      await axios.patch(
+        `http://localhost:4003/products/updateProductDetail/${product.id}`,
+        {
+          stock : quantity
+        }
+      );
     }
 
+    await redis.del(cartKey);
+
+    return order;
   });
 };
