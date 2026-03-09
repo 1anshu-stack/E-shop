@@ -73,10 +73,11 @@ export const createService = async (userId: string) => {
       })
         
       // Decrease stock
+      let stock = product.stock - quantity;
       await axios.patch(
         `http://localhost:4003/products/updateProductDetail/${product.id}`,
         {
-          stock : quantity
+          stock 
         }
       );
     }
