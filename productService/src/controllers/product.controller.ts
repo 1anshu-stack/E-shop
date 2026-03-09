@@ -1,7 +1,9 @@
 import {Request, Response} from "express";
 import * as productService from "../services/product.service"
 
-
+type Params = {
+  id: string;
+};
 
 /**
  * createProduct controller
@@ -56,6 +58,11 @@ export const getAllProduct = async(req: Request, res: Response) => {
 
 
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ */
 export const getProductById = async(req: Request, res: Response) => {
   const {productIds} = req.body;
 
@@ -65,5 +72,30 @@ export const getProductById = async(req: Request, res: Response) => {
     success: true,
     message: "Product By Id",
     data: result
+  })
+}
+
+
+/**
+ * update prodct controller
+ * @param req 
+ * @param res 
+ */
+export const updateProduct = async(req: Request<Params>, res: Response) => {
+  const { id } = req.params;
+  // console.log("ID:", `"${req.params.id}"`)
+  const { name, description, price, stock } = req.body
+
+  const updatedProduct = await productService.updateProduct(id, {
+    name,
+    description,
+    price,
+    stock
+  })
+
+  res.status(201).json({
+    success: true,
+    messsage: "Product update",
+    data: updatedProduct
   })
 }

@@ -69,6 +69,11 @@ export const getProductService = async (
 }
 
 
+/**
+ * 
+ * @param productIds 
+ * @returns 
+ */
 export const getProductById = async (productIds: string[]) => {
   const data = await prisma.product.findMany({
     where: {
@@ -80,3 +85,36 @@ export const getProductById = async (productIds: string[]) => {
 
   return data;
 }
+
+
+
+/**
+ * update product service
+ * @param id 
+ * @param data 
+ * @returns 
+ */
+export const updateProduct = async (
+  id: string, 
+  data: {
+    name? : string,
+    description? : string,
+    price? : number,
+    stock? : number
+  }) => {
+    // console.log("ID:", `"${id}"`)
+    const product = await prisma.product.findFirst({
+      where: {id}
+    })
+  
+    if (!product) {
+      throw new Error("Product not found")
+    }
+
+    const result = await prisma.product.update({
+      where: {id},
+      data
+    })
+
+    return result;
+  }

@@ -34,4 +34,12 @@ router.post(
   productController.getProductById
 )
 
+/**
+ * update prodct route
+ */
+router.patch(
+  '/updateProductDetail/:id',
+  productController.updateProduct
+)
+
 export default router;
