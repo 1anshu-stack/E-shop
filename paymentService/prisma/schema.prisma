@@ -13,3 +13,21 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Payment {
+ id                String   @id @default(uuid())
+ orderId           String
+ userId            String
+ amount            Int
+ currency          String   @default("INR")
+ razorpayOrderId   String   @unique
+ razorpayPaymentId String?
+ status            PaymentStatus
+ createdAt         DateTime @default(now())
+}
+
+enum PaymentStatus {
+ PENDING
+ SUCCESS
+ FAILED
+}
