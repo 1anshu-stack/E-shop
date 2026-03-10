@@ -14,6 +14,10 @@ app.use(rateLimit);
 app.use(helmet());
 app.use(morgan("combined"));
 
+app.use((req,res,next)=>{
+  console.log("Incoming:", req.method, req.url);
+  next();
+});
 app.use('/api/v1', proxyRoutes);
 
 app.use(globalErrorHandler);

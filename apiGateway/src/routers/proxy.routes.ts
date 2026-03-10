@@ -96,4 +96,30 @@ router.use(
   })
 )
 
+
+
+/**
+ * Protected orderService routes
+ */
+router.use(
+  "/order",
+  validateToken,
+  createProxyMiddleware({
+    target: "http://localhost:4005/order",
+    changeOrigin: true,
+    on: {
+      proxyReq: (proxyReq: ClientRequest, req: Request, res: Response) => {
+        if (req.user) {
+          proxyReq.setHeader(
+            "x-user-id",
+            JSON.stringify({
+              userId: req.user.sub,
+            })
+          );
+        }
+      },
+    },
+  })
+)
+
 export default router;
